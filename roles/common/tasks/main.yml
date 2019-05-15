@@ -1,0 +1,10 @@
+- name: Install python
+  raw: sudo apt update && sudo apt install python3
+
+- name: Install base deps
+  apt:
+    name:
+      - git
+      - python3-pip
+    state: present
+    update_cache: true

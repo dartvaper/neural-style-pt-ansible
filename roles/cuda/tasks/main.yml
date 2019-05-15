@@ -1,0 +1,36 @@
+- name: Install cuda repo
+  apt:
+    deb: "{{ cuda_repo_pkg_url }}"
+    update_cache: true
+
+- name: Add an apt key for cuda repo
+  apt_key:
+    url: "{{ cuda_repo_key_url }}"
+    state: present
+
+- name: Install cuda pkg & deps
+  apt:
+    name:
+      - cuda
+    state: present
+    update_cache: true
+
+- name: Unarchive cuDNN
+  unarchive:
+    src: "{{ cuda_cudnn_tar_url }}"
+    dest: /tmp
+    remote_src: true
+    mode: u=rw,g=rw,o=
+
+- name: Copy cuDNN header
+  copy:
+    src: /tmp/cuda/include/cudnn.h
+    dest: /usr/local/cuda/include/cudnn.h
+    remote_src: true
+
+- name: Copy cuDNN lib
+  copy:
+    src: /tmp/cuda/lib64/libcudnn.so.7.5.1
+    dest: /usr/local/cuda/lib64/libcudnn.so.7
+    remote_src: true
+

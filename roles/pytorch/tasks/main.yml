@@ -1,0 +1,7 @@
+- name: Install pip pkgs
+  pip:
+    name: "{{ item }}"
+    executable: pip3
+  loop:
+    - torch
+    - torchvision

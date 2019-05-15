@@ -1,0 +1,13 @@
+- hosts: all
+  gather_facts: false
+  become: true
+  roles:
+    - common
+
+- hosts: all
+  gather_facts: true
+  become: true
+  roles:
+    - pytorch
+    - cuda
+    - neural_style

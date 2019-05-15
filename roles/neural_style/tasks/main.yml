@@ -1,0 +1,19 @@
+- name: Get the latest source code
+  git:
+    repo: https://github.com/ProGamerGov/neural-style-pt
+    dest: "{{ neural_style_dir }}"
+    update: true
+
+- name: Make neural_style dir accessible
+  file:
+    name: "{{ neural_style_dir }}"
+    state: directory
+    owner: "{{ ansible_ssh_user }}"
+    mode: "u=rwx,g-wx,o-rwx"
+    recurse: true
+
+- name: Download modules
+  shell: "python3 models/download_models.py"
+  args:
+    chdir: "{{ neural_style_dir }}"
+  become: false
